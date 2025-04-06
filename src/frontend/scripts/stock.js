@@ -16,6 +16,9 @@ let stock = [];
 
 // Cargar datos al iniciar
 document.addEventListener('DOMContentLoaded', () => {
+    // Asegurarse de que el modal esté oculto al cargar la página
+    stockModal.style.display = 'none';
+    
     cargarCategorias();
     cargarProductos();
 });
@@ -113,12 +116,20 @@ function abrirModalStock(productoId = null) {
     }
     
     stockModal.style.display = 'block';
+    // Dar tiempo al navegador para procesar el display block
+    requestAnimationFrame(() => {
+        stockModal.classList.add('show');
+    });
 }
 
 // Función para cerrar el modal de stock
 function cerrarModalStock() {
-    stockModal.style.display = 'none';
-    stockForm.reset();
+    stockModal.classList.remove('show');
+    // Esperar a que termine la animación antes de ocultar el modal
+    setTimeout(() => {
+        stockModal.style.display = 'none';
+        stockForm.reset();
+    }, 300); // El tiempo debe coincidir con la duración de la transición en CSS
 }
 
 // Función para guardar stock
