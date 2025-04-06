@@ -6,7 +6,7 @@ exports.getAllProductos = async (req, res) => {
         const [productos] = await db.query(`
             SELECT p.*, c.nombre_categoria 
             FROM productos p 
-            JOIN categoria c ON p.categoria_id = c.id 
+            LEFT JOIN categoria c ON p.id_categoria = c.id_categoria 
             WHERE p.estado = TRUE
         `);
         
@@ -37,8 +37,8 @@ exports.getProductoById = async (req, res) => {
         const [productos] = await db.query(`
             SELECT p.*, c.nombre_categoria 
             FROM productos p 
-            JOIN categoria c ON p.categoria_id = c.id 
-            WHERE p.id = ? AND p.estado = TRUE
+            LEFT JOIN categoria c ON p.id_categoria = c.id_categoria 
+            WHERE p.id_producto = ? AND p.estado = TRUE
         `, [id]);
         
         if (productos.length === 0) {
@@ -71,10 +71,10 @@ exports.getProductoById = async (req, res) => {
 // Crear un nuevo producto
 exports.createProducto = async (req, res) => {
     try {
-        const { nombre_producto, descripcion, precio, categoria_id } = req.body;
+        const { nombre_producto, descripcion, precio, id_categoria } = req.body;
         
         // Validar campos requeridos
-        if (!nombre_producto || !precio || !categoria_id) {
+        if (!nombre_producto || !precio || !id_categoria) {
             return res.status(400).json({
                 status: 'error',
                 message: 'Nombre, precio y categoría son obligatorios'
@@ -91,7 +91,7 @@ exports.createProducto = async (req, res) => {
         }
         
         // Verificar si la categoría existe
-        const [categorias] = await db.query('SELECT * FROM categoria WHERE id = ? AND estado = TRUE', [categoria_id]);
+        const [categorias] = await db.query('SELECT * FROM categoria WHERE id_categoria = ?', [id_categoria]);
         if (categorias.length === 0) {
             return res.status(400).json({
                 status: 'error',
@@ -107,16 +107,16 @@ exports.createProducto = async (req, res) => {
         
         // Insertar el producto
         const [result] = await db.query(
-            'INSERT INTO productos (nombre_producto, descripcion, precio, categoria_id, imagen) VALUES (?, ?, ?, ?, ?)',
-            [nombre_producto, descripcion, precioNumerico, categoria_id, imagen]
+            'INSERT INTO productos (nombre_producto, descripcion, precio, id_categoria, imagen) VALUES (?, ?, ?, ?, ?)',
+            [nombre_producto, descripcion, precioNumerico, id_categoria, imagen]
         );
         
         // Obtener el producto creado
         const [newProducto] = await db.query(`
             SELECT p.*, c.nombre_categoria 
             FROM productos p 
-            JOIN categoria c ON p.categoria_id = c.id 
-            WHERE p.id = ?
+            LEFT JOIN categoria c ON p.id_categoria = c.id_categoria 
+            WHERE p.id_producto = ?
         `, [result.insertId]);
         
         // Convertir el precio a número
@@ -144,10 +144,10 @@ exports.createProducto = async (req, res) => {
 exports.updateProducto = async (req, res) => {
     try {
         const { id } = req.params;
-        const { nombre_producto, descripcion, precio, categoria_id } = req.body;
+        const { nombre_producto, descripcion, precio, id_categoria } = req.body;
         
         // Validar campos requeridos
-        if (!nombre_producto || !precio || !categoria_id) {
+        if (!nombre_producto || !precio || !id_categoria) {
             return res.status(400).json({
                 status: 'error',
                 message: 'Nombre, precio y categoría son obligatorios'
@@ -164,7 +164,7 @@ exports.updateProducto = async (req, res) => {
         }
         
         // Verificar si el producto existe
-        const [productos] = await db.query('SELECT * FROM productos WHERE id = ? AND estado = TRUE', [id]);
+        const [productos] = await db.query('SELECT * FROM productos WHERE id_producto = ? AND estado = TRUE', [id]);
         if (productos.length === 0) {
             return res.status(404).json({
                 status: 'error',
@@ -173,7 +173,7 @@ exports.updateProducto = async (req, res) => {
         }
         
         // Verificar si la categoría existe
-        const [categorias] = await db.query('SELECT * FROM categoria WHERE id = ? AND estado = TRUE', [categoria_id]);
+        const [categorias] = await db.query('SELECT * FROM categoria WHERE id_categoria = ?', [id_categoria]);
         if (categorias.length === 0) {
             return res.status(400).json({
                 status: 'error',
@@ -189,16 +189,16 @@ exports.updateProducto = async (req, res) => {
         
         // Actualizar el producto
         await db.query(
-            'UPDATE productos SET nombre_producto = ?, descripcion = ?, precio = ?, categoria_id = ?, imagen = ? WHERE id = ?',
-            [nombre_producto, descripcion, precioNumerico, categoria_id, imagen, id]
+            'UPDATE productos SET nombre_producto = ?, descripcion = ?, precio = ?, id_categoria = ?, imagen = ? WHERE id_producto = ?',
+            [nombre_producto, descripcion, precioNumerico, id_categoria, imagen, id]
         );
         
         // Obtener el producto actualizado
         const [updatedProducto] = await db.query(`
             SELECT p.*, c.nombre_categoria 
             FROM productos p 
-            JOIN categoria c ON p.categoria_id = c.id 
-            WHERE p.id = ?
+            LEFT JOIN categoria c ON p.id_categoria = c.id_categoria 
+            WHERE p.id_producto = ?
         `, [id]);
         
         // Convertir el precio a número
@@ -228,7 +228,7 @@ exports.deleteProducto = async (req, res) => {
         const { id } = req.params;
         
         // Verificar si el producto existe
-        const [productos] = await db.query('SELECT * FROM productos WHERE id = ? AND estado = TRUE', [id]);
+        const [productos] = await db.query('SELECT * FROM productos WHERE id_producto = ? AND estado = TRUE', [id]);
         if (productos.length === 0) {
             return res.status(404).json({
                 status: 'error',
@@ -237,7 +237,7 @@ exports.deleteProducto = async (req, res) => {
         }
         
         // Realizar soft delete
-        await db.query('UPDATE productos SET estado = FALSE WHERE id = ?', [id]);
+        await db.query('UPDATE productos SET estado = FALSE WHERE id_producto = ?', [id]);
         
         res.json({
             status: 'success',

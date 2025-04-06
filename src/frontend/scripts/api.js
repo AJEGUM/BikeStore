@@ -2,7 +2,7 @@
 const API_URL = 'http://localhost:3000/api';
 
 // Funciones para manejar las llamadas a la API
-const api = {
+export const api = {
     // Productos
     async getProductos() {
         try {
@@ -30,6 +30,54 @@ const api = {
         }
     },
 
+    async createProducto(formData) {
+        try {
+            const response = await fetch(`${API_URL}/productos`, {
+                method: 'POST',
+                body: formData
+            });
+            if (!response.ok) {
+                throw new Error('Error al crear el producto');
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Error:', error);
+            throw error;
+        }
+    },
+
+    async updateProducto(id, formData) {
+        try {
+            const response = await fetch(`${API_URL}/productos/${id}`, {
+                method: 'PUT',
+                body: formData
+            });
+            if (!response.ok) {
+                throw new Error('Error al actualizar el producto');
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Error:', error);
+            throw error;
+        }
+    },
+
+    async deleteProducto(id) {
+        try {
+            const response = await fetch(`${API_URL}/productos/${id}`, {
+                method: 'DELETE'
+            });
+            if (!response.ok) {
+                throw new Error('Error al eliminar el producto');
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Error:', error);
+            throw error;
+        }
+    },
+
+    // Categorías
     async getCategorias() {
         try {
             const response = await fetch(`${API_URL}/categorias`);
@@ -39,6 +87,76 @@ const api = {
             return await response.json();
         } catch (error) {
             console.error('Error:', error);
+            throw error;
+        }
+    },
+
+    async getCategoria(id) {
+        try {
+            const response = await fetch(`${API_URL}/categorias/${id}`);
+            if (!response.ok) {
+                throw new Error('Error al obtener la categoría');
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Error:', error);
+            throw error;
+        }
+    },
+
+    async createCategoria(categoriaData) {
+        try {
+            const response = await fetch(`${API_URL}/categorias`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(categoriaData),
+            });
+            if (!response.ok) {
+                throw new Error('Error al crear la categoría');
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Error:', error);
+            throw error;
+        }
+    },
+
+    async updateCategoria(id, categoriaData) {
+        try {
+            const response = await fetch(`${API_URL}/categorias/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(categoriaData),
+            });
+            if (!response.ok) {
+                throw new Error('Error al actualizar la categoría');
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Error:', error);
+            throw error;
+        }
+    },
+
+    async deleteCategoria(id) {
+        try {
+            const response = await fetch(`${API_URL}/categorias/${id}`, {
+                method: 'DELETE'
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.message || 'Error al eliminar la categoría');
+            }
+            
+            return data;
+        } catch (error) {
+            console.error('Error en deleteCategoria:', error);
             throw error;
         }
     },
@@ -240,7 +358,4 @@ const api = {
             throw error;
         }
     },
-};
-
-// Exportar el objeto api
-export default api; 
+}; 

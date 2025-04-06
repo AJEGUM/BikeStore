@@ -5,42 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ventas - Bikestore</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <nav class="navbar">
-        <ul>
+        <div class="logo">
+            <h1>Bikestore</h1>
+        </div>
+        <ul class="nav-links">
             <li><a href="index.html">Inicio</a></li>
             <li><a href="productos.html">Productos</a></li>
             <li><a href="stock.html">Stock</a></li>
-            <li><a href="ventas.html">Ventas</a></li>
+            <li><a href="ventas.html" class="active">Ventas</a></li>
             <li><a href="usuarios.html">Usuarios</a></li>
         </ul>
     </nav>
 
     <div class="container">
-        <h1>Ventas</h1>
-
-        <div class="filtros">
-            <div class="form-group">
-                <label for="search-input">Buscar:</label>
-                <input type="text" id="search-input" placeholder="Buscar ventas...">
-            </div>
-
-            <div class="form-group">
-                <label for="fecha-inicio">Fecha inicio:</label>
-                <input type="date" id="fecha-inicio">
-            </div>
-
-            <div class="form-group">
-                <label for="fecha-fin">Fecha fin:</label>
-                <input type="date" id="fecha-fin">
-            </div>
-
-            <button id="btn-filtrar" class="btn">Filtrar</button>
-            <button id="btn-nueva-venta" class="btn">Nueva venta</button>
+        <div class="hero-section">
+            <h1>Gestión de Ventas</h1>
+            <p>Administra las ventas realizadas</p>
         </div>
 
-        <div id="ventas-container">
+        <div class="filters">
+            <input type="text" id="search-input" placeholder="Buscar ventas...">
+            <input type="date" id="fecha-inicio" placeholder="Fecha inicio">
+            <input type="date" id="fecha-fin" placeholder="Fecha fin">
+            <button id="filter-btn" class="btn btn-primary">Filtrar</button>
+            <button id="add-btn" class="btn btn-primary">Nueva Venta</button>
+        </div>
+
+        <div class="table-container">
             <table>
                 <thead>
                     <tr>
@@ -52,43 +47,56 @@
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody id="ventas-tbody"></tbody>
+                <tbody id="ventas-table-body">
+                    <!-- Las ventas se cargarán aquí dinámicamente -->
+                </tbody>
             </table>
         </div>
     </div>
 
-    <div id="modal-nueva-venta" class="modal">
+    <!-- Modal para nueva venta -->
+    <div id="venta-modal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2>Nueva venta</h2>
-                <span class="modal-close">&times;</span>
-            </div>
-            <form id="form-nueva-venta">
+            <span class="close">&times;</span>
+            <h2>Nueva Venta</h2>
+            <form id="venta-form">
                 <div class="form-group">
                     <label for="cliente">Cliente:</label>
-                    <input type="text" id="cliente" required>
+                    <select id="cliente" name="cliente" required>
+                        <!-- Los clientes se cargarán dinámicamente -->
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="productos">Productos:</label>
-                    <div id="productos-venta"></div>
-                    <button type="button" id="btn-agregar-producto" class="btn">Agregar producto</button>
+                    <label for="producto">Producto:</label>
+                    <select id="producto" name="producto" required>
+                        <!-- Los productos se cargarán dinámicamente -->
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="total">Total:</label>
-                    <input type="number" id="total" readonly>
+                    <label for="cantidad">Cantidad:</label>
+                    <input type="number" id="cantidad" name="cantidad" min="1" required>
                 </div>
-                <button type="submit" class="btn">Guardar</button>
+                <button type="button" id="add-producto-btn" class="btn btn-primary">Agregar Producto</button>
+                <div id="productos-venta" class="productos-venta">
+                    <!-- Los productos agregados se mostrarán aquí -->
+                </div>
+                <div class="venta-total">
+                    <span>Total:</span>
+                    <span id="total-venta">$0.00</span>
+                </div>
+                <button type="submit" class="btn btn-primary">Realizar Venta</button>
             </form>
         </div>
     </div>
 
-    <div id="modal-detalle-venta" class="modal">
+    <!-- Modal para detalles de venta -->
+    <div id="detalle-venta-modal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2>Detalle de venta</h2>
-                <span class="modal-close">&times;</span>
+            <span class="close">&times;</span>
+            <h2>Detalles de Venta</h2>
+            <div id="detalle-venta-content">
+                <!-- Los detalles de la venta se mostrarán aquí -->
             </div>
-            <div id="detalle-venta"></div>
         </div>
     </div>
 

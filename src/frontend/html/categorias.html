@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Categorías - BikeStore</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">BikeStore</a>
+            <div class="nav-links">
+                <a href="productos.html">Productos</a>
+                <a href="stock.html">Stock</a>
+                <a href="ventas.html">Ventas</a>
+                <a href="usuarios.html">Usuarios</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sección Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Gestión de Categorías</h1>
+            <p>Administra las categorías de productos de tu tienda de bicicletas</p>
+        </div>
+    </section>
+
+    <!-- Sección principal -->
+    <main class="container">
+        <!-- Filtros -->
+        <section class="filters">
+            <div class="search-box">
+                <input type="text" id="searchInputCategorias" placeholder="Buscar categorías...">
+                <button id="filterButtonCategorias" class="btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <button id="addButtonCategoria" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Nueva Categoría
+            </button>
+        </section>
+
+        <!-- Tabla de categorías -->
+        <section class="table-container">
+            <table id="categoriasTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Las categorías se cargarán dinámicamente aquí -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Modal para agregar/editar categoría -->
+    <div id="categoriaModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitleCategoria">Nueva Categoría</h2>
+            <form id="categoriaForm">
+                <div class="form-group">
+                    <label for="nombre_categoria">Nombre de la categoría</label>
+                    <input type="text" id="nombre_categoria" name="nombre_categoria" required>
+                </div>
+                <div class="form-group">
+                    <label for="descripcion_categoria">Descripción</label>
+                    <textarea id="descripcion_categoria" name="descripcion_categoria" rows="3"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModalCategoria()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="../scripts/api.js"></script>
+    <script type="module" src="../scripts/categorias.js"></script>
+</body>
+</html> 

@@ -3,65 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productos - Bikestore</title>
+    <title>Gestión de Productos y Categorías - BikeStore</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <!-- Barra de navegación -->
     <nav class="navbar">
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="productos.html">Productos</a></li>
-            <li><a href="stock.html">Stock</a></li>
-            <li><a href="ventas.html">Ventas</a></li>
-            <li><a href="usuarios.html">Usuarios</a></li>
-        </ul>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">BikeStore</a>
+            </div>
+            <div class="nav-links">
+                <a href="productos.html" class="active">Productos</a>
+                <a href="stock.html">Stock</a>
+                <a href="ventas.html">Ventas</a>
+                <a href="usuarios.html">Usuarios</a>
+            </div>
+        </div>
     </nav>
 
-    <div class="container">
-        <h1>Productos</h1>
-
-        <div class="filtros">
-            <div class="form-group">
-                <label for="search-input">Buscar:</label>
-                <input type="text" id="search-input" placeholder="Buscar productos...">
-            </div>
-
-            <div class="form-group">
-                <label for="select-categoria">Categoría:</label>
-                <select id="select-categoria">
-                    <option value="">Todas las categorías</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="select-ordenar">Ordenar por:</label>
-                <select id="select-ordenar">
-                    <option value="nombre-asc">Nombre (A-Z)</option>
-                    <option value="nombre-desc">Nombre (Z-A)</option>
-                    <option value="precio-asc">Precio (Menor a Mayor)</option>
-                    <option value="precio-desc">Precio (Mayor a Menor)</option>
-                </select>
-            </div>
-
-            <button id="btn-filtrar" class="btn">Filtrar</button>
+    <!-- Sección Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Gestión de Productos y Categorías</h1>
+            <p>Administra el catálogo de productos y sus categorías</p>
         </div>
+    </section>
 
-        <div id="productos-container" class="productos-grid"></div>
+    <!-- Contenido principal -->
+    <main class="container">
+        <!-- Sección de Categorías -->
+        <section class="section-categorias">
+            <h2>Gestión de Categorías</h2>
+            <div class="filters">
+                <div class="search-box">
+                    <input type="text" id="searchInputCategorias" placeholder="Buscar categorías...">
+                    <button id="filterButtonCategorias" class="btn-primary">
+                        <i class="fas fa-search"></i> Buscar
+                    </button>
+                </div>
+                <button id="addButtonCategoria" class="btn-primary">
+                    <i class="fas fa-plus"></i> Nueva Categoría
+                </button>
+            </div>
+
+            <div class="table-container">
+                <table id="categoriasTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Las categorías se cargarán dinámicamente aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sección de Productos -->
+        <section class="section-productos">
+            <h2>Gestión de Productos</h2>
+            <div class="filters">
+                <div class="search-box">
+                    <input type="text" id="searchInputProductos" placeholder="Buscar productos...">
+                    <select id="category-select">
+                        <option value="">Todas las categorías</option>
+                    </select>
+                    <button id="filterButtonProductos" class="btn-primary">
+                        <i class="fas fa-search"></i> Buscar
+                    </button>
+                </div>
+                <button id="addButtonProducto" class="btn-primary">
+                    <i class="fas fa-plus"></i> Nuevo Producto
+                </button>
+            </div>
+
+            <div class="table-container">
+                <table id="productosTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Los productos se cargarán dinámicamente aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal para agregar/editar categoría -->
+    <div id="categoriaModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitleCategoria">Nueva Categoría</h2>
+                <span class="close">&times;</span>
+            </div>
+            <form id="categoriaForm">
+                <div class="form-group">
+                    <label for="nombre_categoria">Nombre de la categoría:</label>
+                    <input type="text" id="nombre_categoria" name="nombre_categoria" required>
+                </div>
+                <div class="form-group">
+                    <label for="descripcion_categoria">Descripción:</label>
+                    <textarea id="descripcion_categoria" name="descripcion" rows="3"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Guardar</button>
+                    <button type="button" class="btn-secondary" onclick="cerrarModalCategoria()">Cancelar</button>
+                </div>
+            </form>
+        </div>
     </div>
 
-    <div id="carrito" class="cart">
-        <div class="cart-header">
-            <h2>Carrito de compras</h2>
-            <button id="btn-cerrar-carrito" class="btn">Cerrar</button>
+    <!-- Modal de Producto -->
+    <div id="productoModal" class="modal">
+        <div class="modal-content" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 500px; width: 90%;">
+            <div class="modal-header">
+                <h2 id="modalTitleProducto">Agregar Producto</h2>
+                <span class="close" onclick="cerrarModalProducto()">&times;</span>
+            </div>
+            <form id="productoForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="nombre_producto">Nombre del Producto:</label>
+                    <input type="text" id="nombre_producto" name="nombre_producto" required>
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripción:</label>
+                    <textarea id="descripcion" name="descripcion"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="precio">Precio:</label>
+                    <input type="number" id="precio" name="precio" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_categoria">Categoría:</label>
+                    <select id="id_categoria" name="id_categoria" required>
+                        <!-- Las opciones se cargarán dinámicamente -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="imagen">Imagen:</label>
+                    <input type="file" id="imagen" name="imagen" accept="image/*">
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModalProducto()">Cancelar</button>
+                </div>
+            </form>
         </div>
-        <div id="carrito-container"></div>
-        <div id="carrito-total" class="cart-total"></div>
-        <button id="btn-vaciar-carrito" class="btn" onclick="vaciarCarrito()">Vaciar carrito</button>
-        <button id="btn-checkout" class="btn">Realizar compra</button>
     </div>
 
-    <button id="btn-carrito" class="btn">Carrito</button>
-
+    <!-- Scripts -->
+    <script type="module" src="../scripts/api.js"></script>
+    <script type="module" src="../scripts/categorias.js"></script>
     <script type="module" src="../scripts/productos.js"></script>
 </body>
 </html> 
