@@ -210,6 +210,26 @@ productoForm.addEventListener('submit', guardarProducto);
 searchInputProductos.addEventListener('input', filtrarProductos);
 categorySelect.addEventListener('change', filtrarProductos);
 
+// Event listeners para cerrar los modales
+window.addEventListener('click', (event) => {
+    const productoModal = document.getElementById('productoModal');
+    const categoriaModal = document.getElementById('categoriaModal');
+    
+    if (event.target === productoModal) {
+        cerrarModalProducto();
+    }
+    if (event.target === categoriaModal) {
+        cerrarModalCategoria();
+    }
+});
+
+// Evitar que el clic dentro del contenido del modal lo cierre
+document.querySelectorAll('.modal-content').forEach(content => {
+    content.addEventListener('click', (event) => {
+        event.stopPropagation();
+    });
+});
+
 // Exportar funciones para uso global
 window.editarProducto = editarProducto;
 window.eliminarProducto = eliminarProducto;
