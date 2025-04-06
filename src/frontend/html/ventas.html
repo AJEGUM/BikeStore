@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventas - Bikestore</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="productos.html">Productos</a></li>
+            <li><a href="stock.html">Stock</a></li>
+            <li><a href="ventas.html">Ventas</a></li>
+            <li><a href="usuarios.html">Usuarios</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Ventas</h1>
+
+        <div class="filtros">
+            <div class="form-group">
+                <label for="search-input">Buscar:</label>
+                <input type="text" id="search-input" placeholder="Buscar ventas...">
+            </div>
+
+            <div class="form-group">
+                <label for="fecha-inicio">Fecha inicio:</label>
+                <input type="date" id="fecha-inicio">
+            </div>
+
+            <div class="form-group">
+                <label for="fecha-fin">Fecha fin:</label>
+                <input type="date" id="fecha-fin">
+            </div>
+
+            <button id="btn-filtrar" class="btn">Filtrar</button>
+            <button id="btn-nueva-venta" class="btn">Nueva venta</button>
+        </div>
+
+        <div id="ventas-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                        <th>Total</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="ventas-tbody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="modal-nueva-venta" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Nueva venta</h2>
+                <span class="modal-close">&times;</span>
+            </div>
+            <form id="form-nueva-venta">
+                <div class="form-group">
+                    <label for="cliente">Cliente:</label>
+                    <input type="text" id="cliente" required>
+                </div>
+                <div class="form-group">
+                    <label for="productos">Productos:</label>
+                    <div id="productos-venta"></div>
+                    <button type="button" id="btn-agregar-producto" class="btn">Agregar producto</button>
+                </div>
+                <div class="form-group">
+                    <label for="total">Total:</label>
+                    <input type="number" id="total" readonly>
+                </div>
+                <button type="submit" class="btn">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-detalle-venta" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Detalle de venta</h2>
+                <span class="modal-close">&times;</span>
+            </div>
+            <div id="detalle-venta"></div>
+        </div>
+    </div>
+
+    <script type="module" src="../scripts/ventas.js"></script>
+</body>
+</html> 

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio - Bikestore</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <h1>Bikestore</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Inicio</a></li>
+            <li><a href="productos.html">Productos</a></li>
+            <li><a href="stock.html">Stock</a></li>
+            <li><a href="ventas.html">Ventas</a></li>
+            <li><a href="usuarios.html">Usuarios</a></li>
+        </ul>
+        <div class="cart-icon">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cart-count">0</span>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="hero-section">
+            <h1>Bienvenido a Bikestore</h1>
+            <p>Tu tienda de bicicletas de confianza</p>
+        </div>
+
+        <div class="productos-mas-vendidos">
+            <h2>Nuestros Productos</h2>
+            <div id="productos-mas-vendidos-container" class="productos-grid"></div>
+        </div>
+    </div>
+
+    <!-- Carrito de compras -->
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Carrito de compras</h3>
+            <button id="close-cart" class="close-btn"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="cart-items" class="cart-items">
+            <!-- Los items del carrito se agregarán aquí dinámicamente -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-price">$0.00</span>
+            </div>
+            <button id="checkout-btn" class="btn btn-primary">Realizar compra</button>
+        </div>
+    </div>
+
+    <div id="cart-overlay" class="cart-overlay"></div>
+
+    <script type="module" src="../scripts/index.js"></script>
+</body>
+</html> 
