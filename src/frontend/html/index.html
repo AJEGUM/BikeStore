@@ -19,45 +19,80 @@
             <li><a href="stock.html">Stock</a></li>
             <li><a href="ventas.html">Ventas</a></li>
             <li><a href="usuarios.html">Usuarios</a></li>
+            <li>
+                <div class="cart-icon" id="cartIcon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </div>
+            </li>
         </ul>
-        <div class="cart-icon">
-            <i class="fas fa-shopping-cart"></i>
-            <span id="cart-count">0</span>
-        </div>
     </nav>
 
     <div class="container">
         <div class="hero-section">
             <h1>Bienvenido a Bikestore</h1>
-            <p>Tu tienda de bicicletas de confianza</p>
+            <p>Descubre nuestra selección de productos para ciclismo</p>
         </div>
 
-        <div class="productos-mas-vendidos">
-            <h2>Nuestros Productos</h2>
-            <div id="productos-mas-vendidos-container" class="productos-grid"></div>
+        <!-- Filtros -->
+        <div class="filters">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Buscar productos...">
+                <select id="categoryFilter">
+                    <option value="">Todas las categorías</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Grid de productos -->
+        <div class="productos-grid" id="productosGrid">
+            <!-- Los productos se cargarán dinámicamente aquí -->
         </div>
     </div>
 
-    <!-- Carrito de compras -->
-    <div id="cart-sidebar" class="cart-sidebar">
-        <div class="cart-header">
-            <h3>Carrito de compras</h3>
-            <button id="close-cart" class="close-btn"><i class="fas fa-times"></i></button>
+    <!-- Modal de detalles del producto -->
+    <div id="productoDetalleModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="producto-detalle">
+                <img id="modalProductoImagen" src="" alt="Imagen del producto" class="producto-detalle-imagen">
+                <h2 id="modalProductoTitulo"></h2>
+                <p id="modalProductoDescripcion"></p>
+                <div class="producto-detalle-info">
+                    <span class="product-category" id="modalProductoCategoria"></span>
+                    <p class="precio" id="modalProductoPrecio"></p>
+                </div>
+                <button class="btn btn-primary" onclick="agregarAlCarrito(productoSeleccionado)">
+                    <i class="fas fa-shopping-cart"></i> Agregar al carrito
+                </button>
+            </div>
         </div>
-        <div id="cart-items" class="cart-items">
-            <!-- Los items del carrito se agregarán aquí dinámicamente -->
+    </div>
+
+    <!-- Carrito lateral -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Carrito de Compras</h3>
+            <button class="close-btn" id="closeCart">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Los items del carrito se cargarán aquí -->
         </div>
         <div class="cart-footer">
             <div class="cart-total">
                 <span>Total:</span>
                 <span id="cart-total-price">$0.00</span>
             </div>
-            <button id="checkout-btn" class="btn btn-primary">Realizar compra</button>
+            <button class="btn btn-primary" id="checkout-btn">
+                Proceder al pago
+            </button>
         </div>
     </div>
 
-    <div id="cart-overlay" class="cart-overlay"></div>
-
+    <script type="module" src="../scripts/api.js"></script>
     <script type="module" src="../scripts/index.js"></script>
 </body>
 </html> 
