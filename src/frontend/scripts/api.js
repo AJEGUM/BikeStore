@@ -46,18 +46,27 @@ export const api = {
         }
     },
 
-    async updateProducto(id, formData) {
+    async updateProducto(id, data) {
         try {
-            const response = await fetch(`${API_URL}/productos/${id}`, {
+            // Determinar si data es un objeto JSON o FormData
+            const isFormData = data instanceof FormData;
+            
+            const options = {
                 method: 'PUT',
-                body: formData
-            });
+                headers: isFormData ? {} : { 'Content-Type': 'application/json' },
+                body: isFormData ? data : JSON.stringify(data)
+            };
+            
+            const response = await fetch(`${API_URL}/productos/${id}`, options);
+            
             if (!response.ok) {
-                throw new Error('Error al actualizar el producto');
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Error al actualizar el producto');
             }
+            
             return await response.json();
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error en updateProducto:', error);
             throw error;
         }
     },
