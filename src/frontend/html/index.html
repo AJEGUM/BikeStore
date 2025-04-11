@@ -19,6 +19,19 @@
             <li><a href="stock.html">Stock</a></li>
             <li><a href="ventas.html">Ventas</a></li>
             <li><a href="usuarios.html">Usuarios</a></li>
+            <li id="userInfoContainer" style="display: none;">
+                <div class="user-info">
+                    <span id="userName"></span>
+                    <button class="logout-btn" onclick="logout()" title="Cerrar sesión">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </li>
+            <li>
+                <a href="inicioSesion.html" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                </a>
+            </li>
             <li>
                 <div class="cart-icon" id="cartIcon">
                     <i class="fas fa-shopping-cart"></i>
@@ -94,5 +107,34 @@
 
     <script type="module" src="../scripts/api.js"></script>
     <script type="module" src="../scripts/index.js"></script>
+    <script>
+        // Verificar si el usuario está logueado al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user) {
+                showUserInfo(user);
+            } else {
+                // Si no hay usuario logueado, redirigir a la página de inicio de sesión
+                window.location.href = 'inicioSesion.html';
+            }
+        });
+
+        function showUserInfo(user) {
+            const userInfoContainer = document.getElementById('userInfoContainer');
+            const userName = document.getElementById('userName');
+            
+            userInfoContainer.style.display = 'block';
+            userName.textContent = user.nombre_usuario;
+        }
+
+        function logout() {
+            // Eliminar datos de sesión
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            
+            // Redirigir a la página principal
+            window.location.href = 'index.html';
+        }
+    </script>
 </body>
 </html> 

@@ -11,11 +11,18 @@ const stockRoutes = require('./src/routes/stock.routes');
 const usuarioRoutes = require('./src/routes/usuario.routes');
 const rolRoutes = require('./src/routes/rol.routes');
 const ventaRoutes = require('./src/routes/venta.routes');
+const authRoutes = require('./src/routes/auth.routes');
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// Configuración de CORS
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// Middleware para parsear JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -50,6 +57,7 @@ app.use('/api/stock', stockRoutes);
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/roles', rolRoutes);
 app.use('/api/ventas', ventaRoutes);
+app.use('/api/auth', authRoutes);
 
 // Manejo de errores
 app.use((err, req, res, next) => {

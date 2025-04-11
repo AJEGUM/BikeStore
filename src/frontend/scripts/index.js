@@ -232,11 +232,26 @@ function initEventListeners() {
             productoDetalleModal.style.display = 'none';
         }
     });
-    
     document.querySelector('#productoDetalleModal .close').addEventListener('click', () => {
         productoDetalleModal.style.display = 'none';
     });
 }
+
+function verificarAutenticacion() {
+    const usuarioLogueado = localStorage.getItem('usuarioLogueado'); // O utiliza cookies, según tu sistema
+    return usuarioLogueado !== null;
+}
+
+// Evento para el botón de "Proceder al pago"
+document.getElementById('checkout-btn').addEventListener('click', function() {
+    if (verificarAutenticacion()) {
+        // Si está logueado, puedes redirigir a la página de pago
+        window.location.href = "pagina_pago.html"; // Reemplaza por la URL de la página de pago
+    } else {
+        // Si no está logueado, redirige a la página de inicio de sesión
+        window.location.href = "inicioSesion.html"; // Reemplaza por la URL de la página de login
+    }
+});
 
 // Exportar funciones para uso global
 window.mostrarDetalleProducto = mostrarDetalleProducto;
